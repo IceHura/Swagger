@@ -1,0 +1,34 @@
+services:
+  api:
+    build: .
+    container_name: express-api-exemple-3-live
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start
+    networks:
+      - app_network
+
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb-live3
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - app_network 
+
+volumes:
+  mongodb-data:
+
+networks:
+  app_network:
